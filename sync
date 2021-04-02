@@ -1,19 +1,20 @@
 #!/bin/bash
 
-MANIFEST=git://github.com/ArrowOS/android_manifest.git
-BRANCH=arrow-11.0
+MANIFEST=git://github.com/ProjectSakura/android.git
+BRANCH=11
 
 mkdir -p /tmp/rom
 cd /tmp/rom
 sudo apt-get install wget -y
 # Repo init command, that -device,-mips,-darwin,-notdefault part will save you more time and storage to sync, add more according to your rom and choice. Optimization is welcomed! Let's make it quit, and with depth=1 so that no unnecessary things.
 repo init --no-repo-verify --depth=1 -u "$MANIFEST" -b "$BRANCH" -g default,-device,-mips,-darwin,-notdefault
-git config --global user.name ItsVixano
-git config --global user.email vixanonew@gmail.com
+git config --global user.name a9ito
+git config --global user.email anggit.febriantoro@gmail.com
 
 # Sync source with -q, no need unnecessary messages, you can remove -q if want! try with -j30 first, if fails, it will try again with -j8
-repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j30
 
-git clone https://github.com/henloscape/device_xiaomi_lava -b arrow-11 device/xiaomi/lava 
-git clone https://github.com/Redmi-MT6768/android_vendor_xiaomi_lava vendor/xiaomi/lava 
-bash device/xiaomi/lava/vendorsetup.sh 
+git clone https://github.com/a9ito/android_device_xiaomi_miatoll-1.git -b rebase device/xiaomi/miatoll
+git clone https://github.com/a9ito/android_device_xiaomi_sm6250-common.git -b rebase device/xiaomi/sm6250-common
+git clone https://github.com/SonalSingh18/android_vendor_xiaomi_sm6250.git -b havoc vendor/xiaomi/
+git clone https://github.com/SonalSingh18/android_kernel_xiaomi_sm6250.git -b rebase kernel/xiaomi/sm6250

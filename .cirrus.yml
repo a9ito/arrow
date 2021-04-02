@@ -8,7 +8,7 @@ task:
     timeout_in: 120m
     container:
       image: a9ito/sakura:latest
-      cpu: 10
+      cpu: 8
       memory: 32G
     download_ccache_script:
       - ./download_ccache
